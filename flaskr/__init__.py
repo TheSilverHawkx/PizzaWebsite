@@ -1,5 +1,6 @@
 import os
-from Flask import Flask
+from flask import Flask
+from . import db
 
 def create_app(test_config=None):
     app = Flask(__name__,instance_relative_config=True)
@@ -24,5 +25,14 @@ def create_app(test_config=None):
     
     def hello():
         return 'Hello, world!'
+
+    # Initialize DB
+    from . import db
+    db.init_app(app)
+
+    # Import authentication
+    #from . import auth
+    #app.register_blueprint(auth.bp)
+
 
     return app
