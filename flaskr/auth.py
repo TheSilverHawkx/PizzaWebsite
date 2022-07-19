@@ -1,5 +1,3 @@
-from crypt import methods
-from distutils.log import error
 import functools
 from flask import (
     Blueprint,flash,g,redirect,render_template,request,session,url_for
@@ -27,7 +25,7 @@ def register():
 
         if error is None:
             try:
-                db.execute("INSERT INTO Users (username,password) VALUES (?,?)",(username,generate_password_hash(password)))
+                db.execute("INSERT INTO Users (username,password,displayName) VALUES (?,?,?)",(username,generate_password_hash(password),username))
                 db.commit()
             except db.IntegrityError:
                 error = F"User {username} already exists."
