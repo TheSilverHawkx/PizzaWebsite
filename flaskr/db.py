@@ -15,6 +15,16 @@ def get_db():
 
     return g.db
 
+def parse_json(results: list) -> str:
+    result_list = []
+    for row in results:
+        entry = {}
+        for key in row.keys():
+            entry[key] = row[key]
+        
+        result_list.append(entry)
+    
+    return result_list
 
 def close_db(e=None):
     db = g.pop('db', None)
