@@ -6,9 +6,26 @@
         <div class="row justify-content-center">
             <div class="card" style="width: 100rem;margin: 1rem">
                 <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <div class="container">
+                        <div class="row">
+                          <div class="col">
+                            <h2>Status</h2>
+                            <br/>
+                            <h3>{{order.status}}</h3>
+                          </div>
+                          <div class="col-6">
+                            <h2>{{order.address}}</h2>
+                          </div>
+                          <div class="col">
+                            <h2>Pizza Count</h2>
+                            <br/>
+                            <h3>{{order.configuration | tojson| length}}</h3>
+                          </div>
+                        </div>
+                    </div>
+                    <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                     <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
+                    <a href="#" class="card-link">Another link</a>-->
                 </div>
             </div>
         </div>
