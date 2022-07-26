@@ -33,6 +33,6 @@ def orders_page():
     orders = parse_json(results)
 
     for order in orders:
-        order['configuration'] = parse_json(list(order.configuration))
+        order['configuration'] = parse_json(order['configuration'])
 
     return render_template('orders/list_orders.html',orders=parse_json(results))
