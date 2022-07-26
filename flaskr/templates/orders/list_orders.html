@@ -1,36 +1,119 @@
 {% extends 'base.html' %}
+{% block style %}
+<style>
+  .cardCollapseButton {
+    float:right;
+    background-color: transparent;
+    border: 0;
+    transition: transform .2s ease-in-out;
+    padding: 0;
+  }
+
+  .cardCollapseButton svg {
+    filter: invert(57%) sepia(0%) saturate(252%) hue-rotate(168deg) brightness(88%) contrast(86%);
+  }
+
+  .cardCollapseButton svg:hover {
+    filter: invert(0%) sepia(2%) saturate(3831%) hue-rotate(310deg) brightness(85%) contrast(108%);
+  }
+
+  .cardCollapseButton.active {
+    transform: rotate(-180deg);
+  }
+
+  .orderDetailsHeaders {
+    font-size: 1rem;
+    margin-bottom: 0.5rem
+  }
+
+</style>
+{% endblock %}
 
 {% block content %}
+
 <div class="container" style="padding-top:5rem;">
     {% for order in orders %}
-        <div class="row justify-content-center">
-            <div class="card" style="width: 100rem;margin: 1rem">
-                <div class="card-body">
-                    <div class="container">
-                        <div class="row">
-                          <div class="col">
-                            <h2>Status</h2>
-                            <br/>
-                            <h3>{{order.status}}</h3>
-                          </div>
-                          <div class="col-6">
-                            <h2>{{order.address}}</h2>
-                          </div>
-                          <div class="col">
-                            <h2>Pizza Count</h2>
-                            <br/>
-                            <h3>{{order.configuration | tojson| length}}</h3>
-                          </div>
-                        </div>
+      {{order}}
+        <div class="row justify-content-center" style="margin: 1rem">
+            <div class="card" style="width: 70rem">
+              <div class="container" style="padding: 15px 0 0 0;">
+                <div class="row">
+                  <div class="col-11">
+                    <div class="row" style="height:2rem">
+                      <div class="col-2" style="text-align: center;">
+                          <u><p>Status</p></u>
+                      </div>
+                      <div class="col-7">
+                        <u><p>Address</p></u>
+                      </div>
+                      <div class="col-2">
+                        <u><p>Pizza Count</p></u>
+                      </div>
                     </div>
-                    <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>-->
+                    <div class="row">
+                      <div class="col-2" style="text-align: center;">
+                        <h3>{{order.status}}</h3>
+                      </div>
+                      <div class="col-7">
+                        <h3>{{order.address}}</h3>
+                      </div>
+                      <div class="col-2">
+                        <h3>{{order.configuration | tojson| length}}</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-1">
+                    <button type="button" style="float:right;" class="btn-close" aria-label="Close"></button>
+                    <br/>
+                    <br/>
+                    <button type="button" class="cardCollapseButton" data-bs-toggle="collapse" data-bs-target="#collapseable-{{order.id}}" aria-expanded="false" aria-controls="collapseable-{{order.id}}" onclick="toggleCollapse(this)" ><svg width="24px" height="24px" xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg></button>
+                  </div>
                 </div>
+              </div>
+            </div>
+            <div id="collapseable-{{order.id}}" class="collapse"  style="width: 69em;">
+              <div class="card card-body" style="border-radius: 0 0 0.25rem 0.25rem">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-2" >
+                      <p class="orderDetailsHeaders">Order ID</p>
+                      <p>{{ order.id }}</p>
+                    </div>
+                    <div class="col-2">
+                      <p class="orderDetailsHeaders">Creation Date</p>
+                      <p>{{ order.creationDate }}</p>
+                    </div>
+                    <div class="col-5">
+                      <p class="orderDetailsHeaders">Customer Name</p>
+                      <p>{{ order.displayName }}</p>
+                    </div>
+                    <div class="col-3">
+                      <p class="orderDetailsHeaders">Contact Details</p>
+                      {% if order.contacts %}
+                        <p>{{ order.contacts }}</p>
+                      {% else %}
+                        <p>None</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="row">
+                    <h3>Pizzas:</h3> <br/>
+                    <div class="col">
+                      <span style="height: 25px;width: 25px;background-color: #000;border-radius: 50%;display: inline-block;">{{pizza}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
     {% endfor %}
 </div>
+{% endblock %}
 
-
+{% block scripts %}
+  <script type="text/javascript">
+    function toggleCollapse(element) {
+      element.classList.toggle("active");
+    };
+  </script>
 {% endblock %}

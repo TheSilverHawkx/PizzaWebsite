@@ -1,6 +1,9 @@
 <!doctype html>
 <title>{% block title %}{% endblock %} - PizzaSite</title>
-{{ bootstrap.load_css()}}
+<section class="style">
+  {{ bootstrap.load_css()}}
+  {% block style %}{% endblock %}
+</section>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{url_for('orders.orders_page')}}">PizzaSite</a>
@@ -50,6 +53,7 @@
   {% endfor %}
   {% block content %}{% endblock %}
 </section>
-{% block scripts %}
+<section class="scripts">
   {{bootstrap.load_js()}}
-{% endblock %}
+  {% block scripts %}{% endblock %}
+</section>
